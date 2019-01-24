@@ -29,30 +29,41 @@ namespace ConvertToExcel
             {
                 string worksheetsName = $"{file.Name.Replace(".csv", "")}";
                 string csvFileName = $"{path}{file.Name}";
-                var lines = File.ReadAllLines(csvFileName);
-                
-                    
 
                 bool firstRowIsHeader = true;
 
                 var format = new ExcelTextFormat();
                 format.Delimiter = '\t';
 
-                if (lines.Any(arg => arg.Contains("record(s) selected")))
+
+                var text = File.ReadAllText(csvFileName);
+               
+
+                if (text.Contains("record(s) selected") || text.Contains("0 rows affected"))
                 {
+                    // Replace seperator by tab
                     var splitRegex = @"[ ]+(?!((\d{2}):(\d{2})))";
-                    var newContent = lines.Where(arg => !string.IsNullOrWhiteSpace(arg) && !arg.Contains("record(s) selected")
-                    && !Regex.IsMatch(arg, @"[-]+"));
-                    foreach(var row in newContent)
-                    {
-                        Regex.Replace(row, splitRegex, "\t");
-                    }
+                    text = Regex.Replace(text, splitRegex, "\t");
+                    File.WriteAllText(csvFileName, text);
+
+                    var lines = File.ReadAllLines(csvFileName);
+
+                    var newContent = lines.Where(arg => !string.IsNullOrWhiteSpace(arg) && !arg.Contains("record(s)") && !arg.Contains("rows")
+                    && !Regex.IsMatch(arg, @"[-][-]+"));
+                   
                    // newContent.First() = Regex.Replace(newContent.First(), @" +", "\t");
                     File.WriteAllLines(csvFileName, newContent);
                 }
+
+
                 //format.EOL = @"\s+";              // DEFAULT IS "\r\n";
                 // format.TextQualifier = '"';
 
+
+                if (file.Name.Contains("PremiumAmountsAndSunriseFields"))
+                {
+                    format.Delimiter = ',';
+                }
                 using (ExcelPackage package = new ExcelPackage(new FileInfo(excelFileName)))
                 {
                     if (package.Workbook.Worksheets.Any(sheet => sheet.Name == worksheetsName))
