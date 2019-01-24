@@ -1,4 +1,3 @@
-C:\Users\KHANHHUNG\source\repos\ConvertToExcel\ConvertToExcel\obj\Debug\ConvertToExcel.csprojAssemblyReference.cache
 C:\Users\KHANHHUNG\source\repos\ConvertToExcel\ConvertToExcel\obj\Debug\ConvertToExcel.csproj.CoreCompileInputs.cache
 C:\Users\KHANHHUNG\source\repos\ConvertToExcel\ConvertToExcel\bin\Debug\ConvertToExcel.exe.config
 C:\Users\KHANHHUNG\source\repos\ConvertToExcel\ConvertToExcel\bin\Debug\ConvertToExcel.exe
@@ -8,3 +7,4 @@ C:\Users\KHANHHUNG\source\repos\ConvertToExcel\ConvertToExcel\bin\Debug\EPPlus.x
 C:\Users\KHANHHUNG\source\repos\ConvertToExcel\ConvertToExcel\obj\Debug\ConvertToExcel.csproj.CopyComplete
 C:\Users\KHANHHUNG\source\repos\ConvertToExcel\ConvertToExcel\obj\Debug\ConvertToExcel.exe
 C:\Users\KHANHHUNG\source\repos\ConvertToExcel\ConvertToExcel\obj\Debug\ConvertToExcel.pdb
+C:\Users\KHANHHUNG\source\repos\ConvertToExcel\ConvertToExcel\obj\Debug\ConvertToExcel.csprojAssemblyReference.cache

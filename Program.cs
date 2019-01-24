@@ -71,14 +71,34 @@ namespace ConvertToExcel
                         package.Workbook.Worksheets.Delete(worksheetsName);
                     }
                     ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(worksheetsName);
-                    worksheet.Cells["A1"].LoadFromText(new FileInfo(csvFileName), format, OfficeOpenXml.Table.TableStyles.Medium27, firstRowIsHeader);
+                    worksheet.Cells["A1"].LoadFromText(
+                        new FileInfo(csvFileName)
+                        , format
+                       // , OfficeOpenXml.Table.TableStyles.Medium27
+                        , OfficeOpenXml.Table.TableStyles.None
+                        , firstRowIsHeader);
                     var start = worksheet.Dimension.Start;
                     var end = worksheet.Dimension.End;
                     for (int row = start.Row; row <= end.Row; row++)
                     { // Row by row...
+
+                        bool endRowEmpty = true;
                         for (int col = start.Column; col <= end.Column; col++)
                         { // ... Cell by cell...
-                           worksheet.Cells[row, col].Value = worksheet.Cells[row, col].Text.Replace("\"",""); // This got me the actual value I needed.
+                           if(row == start.Column && worksheet.Cells[row, col].Text.Contains("Column"))
+                            {
+                                worksheet.DeleteColumn(col);
+                                break;
+                            }
+                            if (row == end.Row && worksheet.Cells[row, col].Value != null)
+                            {
+                                endRowEmpty = false;
+                            }
+                            worksheet.Cells[row, col].Value = worksheet.Cells[row, col].Text.Replace("\"","").Replace(" #",""); // This got me the actual value I needed.
+                        }
+                        if(row == end.Row && endRowEmpty)
+                        {
+                            worksheet.DeleteRow(row);
                         }
                     }
 
